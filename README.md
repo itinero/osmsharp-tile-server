@@ -8,3 +8,12 @@ Serves tiles directly from raw OSM files using the rendering functionality of Os
 <p>
 	<img src="https://raw.githubusercontent.com/OsmSharp/OsmSharp.Service.Tiles/master/screenshots/osmsharp_tiles_leaflet.png" width="600"/>
 </p>
+
+Setup
+-----
+
+Pull this repository, build and run. Tiles will be available at:
+
+http://localhost:1234/default/{z}/{x}/{y}.png
+
+That's it!
