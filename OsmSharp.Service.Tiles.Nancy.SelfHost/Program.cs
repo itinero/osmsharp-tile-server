@@ -23,7 +23,7 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
 
             // add a default test instance.
             ApiBootstrapper.AddInstance("default", RenderingInstance.BuildForMapCSS(
-                new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen-big.osm.pbf")),
+                new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen.osm.pbf")),
                 Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.default.mapcss")));
 
             // start hosting this!
