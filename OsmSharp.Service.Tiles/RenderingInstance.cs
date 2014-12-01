@@ -117,9 +117,10 @@ namespace OsmSharp.Service.Tiles
             lock (_target)
             {
                 _target.FillRectangle(Brushes.White, 0, 0, 256, 256);
-                var view = _renderer.Create(256, 256, _map, zoomFactor, center, false, true);
-                _map.ViewChanged(zoomFactor, center, view, view);
-                _renderer.Render(_target, _map, view, (float)_map.Projection.ToZoomFactor(zoom));
+                var visibleView = _renderer.Create(256, 256, _map, zoomFactor, center, false, true);
+                var renderingView = _renderer.Create(768, 768, _map, zoomFactor, center, false, true);
+                _map.ViewChanged(zoomFactor, center, renderingView, renderingView);
+                _renderer.Render(_target, _map, visibleView, renderingView, (float)_map.Projection.ToZoomFactor(zoom));
 
                 switch (type)
                 {
