@@ -31,7 +31,7 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
                 new OsmSharp.WinForms.UI.Logging.ConsoleTraceListener());
 
             // initialize mapcss interpreter.
-            var mapCSSInterpreter = new MapCSSInterpreter(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.default.mapcss"),
+            var mapCSSInterpreter = new MapCSSInterpreter(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.custom.mapcss"),
                 new MapCSSDictionaryImageSource());
 
             var scene = new Scene2D(new OsmSharp.Math.Geo.Projections.WebMercator(), new List<float>(new float[] {

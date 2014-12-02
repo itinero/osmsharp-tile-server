@@ -117,6 +117,7 @@
     <EmbeddedResource Include="..\OsmSharpTestFiles\kempen.osm.pbf">
       <Link>kempen.osm.pbf</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="custom.mapcss" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
