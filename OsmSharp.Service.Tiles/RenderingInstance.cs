@@ -20,6 +20,7 @@ using OsmSharp.Math.Geo.Projections;
 using OsmSharp.Osm.Data.Memory;
 using OsmSharp.Osm.Streams;
 using OsmSharp.Osm.Tiles;
+using OsmSharp.Service.Tiles.Cache;
 using OsmSharp.UI.Map;
 using OsmSharp.UI.Map.Layers;
 using OsmSharp.UI.Map.Styles;
@@ -58,9 +59,24 @@ namespace OsmSharp.Service.Tiles
         private Map _map;
 
         /// <summary>
+        /// Holds the tile cache.
+        /// </summary>
+        private TileCache _cache;
+
+        /// <summary>
         /// Creates a new rendering instance.
         /// </summary>
         public RenderingInstance()
+            : this(null)
+        {
+
+        }
+
+        /// <summary>
+        /// Creates a new rendering instance.
+        /// </summary>
+        /// <param name="cache">The cache.</param>
+        public RenderingInstance(TileCache cache)
         {
             // build the target to render to.
             _imageTarget = new Bitmap(256, 256);
@@ -72,6 +88,8 @@ namespace OsmSharp.Service.Tiles
 
             _renderer = new MapRenderer<Graphics>(new GraphicsRenderer2D());
             _map = new Map(new WebMercator());
+
+            _cache = cache;
         }
 
         /// <summary>
@@ -95,7 +113,20 @@ namespace OsmSharp.Service.Tiles
         /// <returns></returns>
         public virtual Stream Get(int x, int y, ushort zoom, ImageType type = ImageType.Png)
         {
-            return this.Render(x, y, zoom, type);
+            Stream cachedImage;
+            var tile = new Tile(x, y, zoom);
+            if (_cache != null &&
+                _cache.TryGet(tile, type, out cachedImage))
+            { // read from cache.
+                return cachedImage;
+            }
+            var renderedImage = this.Render(x, y, zoom, type);
+            if(_cache != null)
+            { // cache image.
+                _cache.Write(tile, type, renderedImage);
+                renderedImage.Seek(0, SeekOrigin.Begin);
+            }
+            return renderedImage;
         }
 
         /// <summary>

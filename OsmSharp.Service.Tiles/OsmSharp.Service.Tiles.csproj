@@ -94,6 +94,7 @@
     <Compile Include="..\SharedAssemblyVersion.cs">
       <Link>Properties\SharedAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Cache\TileCache.cs" />
     <Compile Include="ImageType.cs" />
     <Compile Include="RenderingFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

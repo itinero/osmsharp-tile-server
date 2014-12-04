@@ -2,6 +2,7 @@
 using OsmSharp.Math.Geo.Projections;
 using OsmSharp.Osm.PBF.Streams;
 using OsmSharp.Osm.Streams.Filters;
+using OsmSharp.Service.Tiles.Cache;
 using OsmSharp.UI.Map.Layers;
 using OsmSharp.UI.Map.Styles.MapCSS;
 using OsmSharp.UI.Map.Styles.Streams;
@@ -10,6 +11,7 @@ using OsmSharp.UI.Renderer.Scene.Simplification;
 using OsmSharp.WinForms.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -36,7 +38,7 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
                 16, 14, 12, 10 }));
             var target = new StyleOsmStreamSceneTarget(
                 mapCSSInterpreter, scene, new WebMercator());
-            var source = new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen.osm.pbf"));
+            var source = new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen-big.osm.pbf"));
             var progress = new OsmStreamFilterProgress();
             progress.RegisterSource(source);
             target.RegisterSource(progress);
@@ -45,7 +47,10 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
             var merger = new Scene2DObjectMerger();
             scene = merger.BuildMergedScene(scene);
 
-            var instance = new RenderingInstance();
+            //var instance = new RenderingInstance();
+            var cache = new TileCache(new DirectoryInfo(@"d:\temp\tiles"));
+            cache.Clear();
+            var instance = new RenderingInstance(cache);
             instance.Map.AddLayer(new LayerScene(scene));
 
             // add a default test instance.
