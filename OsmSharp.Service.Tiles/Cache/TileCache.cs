@@ -24,11 +24,6 @@ namespace OsmSharp.Service.Tiles.Cache
         private double _maxAge;
 
         /// <summary>
-        /// Holds the object used to synchronize.
-        /// </summary>
-        private object _sync = new object();
-
-        /// <summary>
         /// Creates a new tile cache.
         /// </summary>
         /// <param name="cacheDir">Cache directory.</param>
@@ -54,12 +49,9 @@ namespace OsmSharp.Service.Tiles.Cache
         /// </summary>
         public void Clear()
         {
-            lock (_sync)
+            foreach (var directory in _cacheDir.EnumerateDirectories())
             {
-                foreach (var directory in _cacheDir.EnumerateDirectories())
-                {
-                    directory.Delete(true);
-                }
+                directory.Delete(true);
             }
         }
 
@@ -96,7 +88,7 @@ namespace OsmSharp.Service.Tiles.Cache
         public bool Has(Tile tile, ImageType type)
         {
             var fileInfo = this.GetTileFile(tile, type);
-            lock (_sync)
+            lock (fileInfo.FullName)
             {
                 return fileInfo.Exists && (DateTime.Now - fileInfo.CreationTime).TotalMilliseconds < _maxAge;
             }
@@ -112,15 +104,17 @@ namespace OsmSharp.Service.Tiles.Cache
         public bool TryGet(Tile tile, ImageType type, out Stream image)
         {
             var fileInfo = this.GetTileFile(tile, type);
-            image = null;
-            lock (_sync)
+            lock (fileInfo.FullName)
             {
+                image = null;
                 if (fileInfo.Exists && (DateTime.Now - fileInfo.CreationTime).TotalMilliseconds < _maxAge)
                 {
-                    var fileStream = fileInfo.OpenRead();
-                    var memoryStream = new MemoryStream();
-                    CopyStream(fileStream, memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    using (var fileStream = fileInfo.OpenRead())
+                    {
+                        image = new MemoryStream();
+                        CopyStream(fileStream, image);
+                        image.Seek(0, SeekOrigin.Begin);
+                    }
                     return true;
                 }
                 return false;
@@ -135,9 +129,9 @@ namespace OsmSharp.Service.Tiles.Cache
         /// <param name="image"></param>
         public void Write(Tile tile, ImageType type, Stream image)
         {
-            lock (_sync)
+            var fileInfo = this.GetTileFile(tile, type);
+            lock (fileInfo.FullName)
             {
-                var fileInfo = this.GetTileFile(tile, type);
                 if (fileInfo.Exists)
                 {
                     fileInfo.Delete();

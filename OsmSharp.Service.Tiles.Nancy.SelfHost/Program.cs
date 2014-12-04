@@ -3,6 +3,7 @@ using OsmSharp.Math.Geo.Projections;
 using OsmSharp.Osm.PBF.Streams;
 using OsmSharp.Osm.Streams.Filters;
 using OsmSharp.Service.Tiles.Cache;
+using OsmSharp.Osm.Xml.Streams;
 using OsmSharp.UI.Map.Layers;
 using OsmSharp.UI.Map.Styles.MapCSS;
 using OsmSharp.UI.Map.Styles.Streams;
@@ -31,8 +32,8 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
                 new OsmSharp.WinForms.UI.Logging.ConsoleTraceListener());
 
             // initialize mapcss interpreter.
-            var mapCSSInterpreter = new MapCSSInterpreter(
-                Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.default.mapcss"), new MapCSSDictionaryImageSource());
+            var mapCSSInterpreter = new MapCSSInterpreter(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.custom.mapcss"),
+                new MapCSSDictionaryImageSource());
 
             var scene = new Scene2D(new OsmSharp.Math.Geo.Projections.WebMercator(), new List<float>(new float[] {
                 16, 14, 12, 10 }));
@@ -47,7 +48,7 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
             var merger = new Scene2DObjectMerger();
             scene = merger.BuildMergedScene(scene);
 
-            //var instance = new RenderingInstance();
+            // var instance = new RenderingInstance();
             var cache = new TileCache(new DirectoryInfo(@"d:\temp\tiles"));
             cache.Clear();
             var instance = new RenderingInstance(cache);
