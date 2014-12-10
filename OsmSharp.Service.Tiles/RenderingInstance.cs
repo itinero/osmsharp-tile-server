@@ -26,6 +26,8 @@ using OsmSharp.UI.Map.Layers;
 using OsmSharp.UI.Map.Styles;
 using OsmSharp.UI.Map.Styles.MapCSS;
 using OsmSharp.WinForms.UI.Renderer;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -39,14 +41,9 @@ namespace OsmSharp.Service.Tiles
     public class RenderingInstance
     {
         /// <summary>
-        /// Holds the target.
+        /// Holds the target per scale.
         /// </summary>
-        private Graphics _target;
-
-        /// <summary>
-        /// Holds the image.
-        /// </summary>
-        private Bitmap _imageTarget;
+        private Dictionary<int, Tuple<Bitmap, Graphics>> _targetsPerScale;
 
         /// <summary>
         /// Holds the renderer.
@@ -78,17 +75,9 @@ namespace OsmSharp.Service.Tiles
         /// <param name="cache">The cache.</param>
         public RenderingInstance(TileCache cache)
         {
-            // build the target to render to.
-            _imageTarget = new Bitmap(256, 256);
-            _target = Graphics.FromImage(_imageTarget);
-            _target.SmoothingMode = SmoothingMode.HighQuality;
-            _target.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            _target.CompositingQuality = CompositingQuality.HighQuality;
-            _target.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
+            _targetsPerScale = new Dictionary<int, Tuple<Bitmap, Graphics>>();
             _renderer = new MapRenderer<Graphics>(new GraphicsRenderer2D());
             _map = new Map(new WebMercator());
-
             _cache = cache;
         }
 
@@ -109,21 +98,22 @@ namespace OsmSharp.Service.Tiles
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="zoom"></param>
+        /// <param name="scale">Scale parameter, 1 = 256, 2 = 512, ...</param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public virtual Stream Get(int x, int y, ushort zoom, ImageType type = ImageType.Png)
+        public virtual Stream Get(int x, int y, ushort zoom, int scale, ImageType type = ImageType.Png)
         {
             Stream cachedImage;
             var tile = new Tile(x, y, zoom);
             if (_cache != null &&
-                _cache.TryGet(tile, type, out cachedImage))
+                _cache.TryGet(tile, scale, type, out cachedImage))
             { // read from cache.
                 return cachedImage;
             }
-            var renderedImage = this.Render(x, y, zoom, type);
+            var renderedImage = this.Render(x, y, scale, zoom, type);
             if(_cache != null)
             { // cache image.
-                _cache.Write(tile, type, renderedImage);
+                _cache.Write(tile, scale, type, renderedImage);
                 renderedImage.Seek(0, SeekOrigin.Begin);
             }
             return renderedImage;
@@ -137,32 +127,52 @@ namespace OsmSharp.Service.Tiles
         /// <param name="zoom"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected virtual Stream Render(int x, int y, ushort zoom, ImageType type)
+        protected virtual Stream Render(int x, int y, int scale, ushort zoom, ImageType type)
         {
             var tile = new Tile(x, y, zoom);
             var projection = _map.Projection;
             var zoomFactor = (float)projection.ToZoomFactor(zoom);
             var center = tile.Box.Center;
+            var sizeInPixels = scale * 256;
+
+            // get target/image.
+            Bitmap image = null;
+            Graphics target = null;
+            lock(_targetsPerScale)
+            {
+                Tuple<Bitmap, Graphics> tuple;
+                if(!_targetsPerScale.TryGetValue(scale, out tuple))
+                { // not there yet!
+                    // build the target to render to.
+                    image = new Bitmap(sizeInPixels, sizeInPixels);
+                    target = Graphics.FromImage(image);
+                    target.SmoothingMode = SmoothingMode.HighQuality;
+                    target.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    target.CompositingQuality = CompositingQuality.HighQuality;
+                    target.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    _targetsPerScale[scale] = new Tuple<Bitmap, Graphics>(image, target);
+                }
+            }
 
             var stream = new MemoryStream();
-            lock (_target)
+            lock (target)
             {
-                _target.FillRectangle(Brushes.White, 0, 0, 256, 256);
+                target.FillRectangle(Brushes.White, 0, 0, sizeInPixels, sizeInPixels);
                 var visibleView = _renderer.Create(256, 256, _map, zoomFactor, center, false, true);
-                var renderingView = _renderer.Create(768, 768, _map, zoomFactor, center, false, true);
+                var renderingView = _renderer.Create(256 * 3, 256 * 3, _map, zoomFactor, center, false, true);
                 _map.ViewChanged(zoomFactor, center, renderingView, renderingView);
-                _renderer.Render(_target, _map, visibleView, renderingView, (float)_map.Projection.ToZoomFactor(zoom));
+                _renderer.Render(target, _map, visibleView, renderingView, (float)_map.Projection.ToZoomFactor(zoom));
 
                 switch (type)
                 {
                     case ImageType.Png:
-                        _imageTarget.Save(stream, ImageFormat.Png);
+                        image.Save(stream, ImageFormat.Png);
                         break;
                     case ImageType.Bmp:
-                        _imageTarget.Save(stream, ImageFormat.Bmp);
+                        image.Save(stream, ImageFormat.Bmp);
                         break;
                     case ImageType.Jpeg:
-                        _imageTarget.Save(stream, ImageFormat.Jpeg);
+                        image.Save(stream, ImageFormat.Jpeg);
                         break;
                 }
             }

@@ -39,7 +39,7 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
                 16, 14, 12, 10 }));
             var target = new StyleOsmStreamSceneTarget(
                 mapCSSInterpreter, scene, new WebMercator());
-            var source = new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen-big.osm.pbf"));
+            var source = new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen.osm.pbf"));
             var progress = new OsmStreamFilterProgress();
             progress.RegisterSource(source);
             target.RegisterSource(progress);

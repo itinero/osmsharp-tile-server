@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="Cache\TileCache.cs" />
     <Compile Include="ImageType.cs" />
-    <Compile Include="RenderingFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderingInstance.cs" />
   </ItemGroup>

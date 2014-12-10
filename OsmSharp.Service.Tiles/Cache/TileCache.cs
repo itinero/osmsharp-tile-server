@@ -61,7 +61,7 @@ namespace OsmSharp.Service.Tiles.Cache
         /// <param name="tile">The tile.</param>
         /// <param name="type">The type of image.</param>
         /// <returns></returns>
-        private FileInfo GetTileFile(Tile tile, ImageType type)
+        private FileInfo GetTileFile(Tile tile, int scale, ImageType type)
         {
             string extension = string.Empty;
             switch (type)
@@ -76,6 +76,10 @@ namespace OsmSharp.Service.Tiles.Cache
                     extension = ".jpg";
                     break;
             }
+            if(scale != null)
+            { // add scale if needed.
+                extension = string.Format("{0}x", scale) + extension;
+            }
             return new FileInfo(Path.Combine(_cacheDir.FullName, tile.Zoom.ToString(), tile.X.ToInvariantString(), tile.Y.ToInvariantString() + extension));
         }
 
@@ -85,9 +89,9 @@ namespace OsmSharp.Service.Tiles.Cache
         /// <param name="tile">The tile.</param>
         /// <param name="type">The type of image.</param>
         /// <returns></returns>
-        public bool Has(Tile tile, ImageType type)
+        public bool Has(Tile tile, int scale, ImageType type)
         {
-            var fileInfo = this.GetTileFile(tile, type);
+            var fileInfo = this.GetTileFile(tile, scale, type);
             lock (fileInfo.FullName)
             {
                 return fileInfo.Exists && (DateTime.Now - fileInfo.CreationTime).TotalMilliseconds < _maxAge;
@@ -101,9 +105,9 @@ namespace OsmSharp.Service.Tiles.Cache
         /// <param name="type"></param>
         /// <param name="image"></param>
         /// <returns></returns>
-        public bool TryGet(Tile tile, ImageType type, out Stream image)
+        public bool TryGet(Tile tile, int scale, ImageType type, out Stream image)
         {
-            var fileInfo = this.GetTileFile(tile, type);
+            var fileInfo = this.GetTileFile(tile, scale, type);
             lock (fileInfo.FullName)
             {
                 image = null;
@@ -127,9 +131,9 @@ namespace OsmSharp.Service.Tiles.Cache
         /// <param name="tile"></param>
         /// <param name="type"></param>
         /// <param name="image"></param>
-        public void Write(Tile tile, ImageType type, Stream image)
+        public void Write(Tile tile, int scale, ImageType type, Stream image)
         {
-            var fileInfo = this.GetTileFile(tile, type);
+            var fileInfo = this.GetTileFile(tile, scale, type);
             lock (fileInfo.FullName)
             {
                 if (fileInfo.Exists)

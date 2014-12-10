@@ -37,7 +37,11 @@ namespace OsmSharp.Service.Tiles.Nancy
         {
             Get["{instance}/{z}/{x}/{y}.png"] = _ =>
             {
-                return this.DoTiles(_);
+                return this.DoTiles(_, 1);
+            };
+            Get["{instance}/{z}/{x}/{y}@2x.png"] = _ =>
+            {
+                return this.DoTiles(_, 2);
             };
         }
 
@@ -45,7 +49,7 @@ namespace OsmSharp.Service.Tiles.Nancy
         /// Executes to get tile request.
         /// </summary>
         /// <param name="_"></param>
-        private dynamic DoTiles(dynamic _)
+        private dynamic DoTiles(dynamic _, int scale)
         {
             string instanceName = _.instance;
 
@@ -63,7 +67,7 @@ namespace OsmSharp.Service.Tiles.Nancy
                 int.TryParse(_.x, out x) &&
                 int.TryParse(_.y, out y))
             { // ok, valid stuff!
-                var stream = instance.Get(x, y, z);
+                var stream = instance.Get(x, y, z, scale);
                 if (stream == null)
                 {
                     return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
