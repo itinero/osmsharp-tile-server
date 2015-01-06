@@ -150,8 +150,11 @@ namespace OsmSharp.Service.Tiles
                     target.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     target.CompositingQuality = CompositingQuality.HighQuality;
                     target.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    _targetsPerScale[scale] = new Tuple<Bitmap, Graphics>(image, target);
+                    tuple = new Tuple<Bitmap, Graphics>(image, target);
+                    _targetsPerScale[scale] = tuple;
                 }
+                target = tuple.Item2;
+                image = tuple.Item1;
             }
 
             var stream = new MemoryStream();
