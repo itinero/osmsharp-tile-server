@@ -3,7 +3,7 @@ using OsmSharp.Math.Geo.Projections;
 using OsmSharp.Osm.PBF.Streams;
 using OsmSharp.Osm.Streams.Filters;
 using OsmSharp.Service.Tiles.Cache;
-using OsmSharp.Osm.Xml.Streams;
+using OsmSharp.Service.Tiles.Nancy;
 using OsmSharp.UI.Map.Layers;
 using OsmSharp.UI.Map.Styles.MapCSS;
 using OsmSharp.UI.Map.Styles.Streams;
@@ -18,9 +18,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsmSharp.Service.Tiles.Nancy.SelfHost
+namespace OsmSharp.Service.Tiles.Sample.SelfHost
 {
-    public class Program
+    class Program
     {
         public static void Main(string[] args)
         {
@@ -32,14 +32,14 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
                 new OsmSharp.WinForms.UI.Logging.ConsoleTraceListener());
 
             // initialize mapcss interpreter.
-            var mapCSSInterpreter = new MapCSSInterpreter(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.custom.mapcss"),
+            var mapCSSInterpreter = new MapCSSInterpreter(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Sample.SelfHost.custom.mapcss"),
                 new MapCSSDictionaryImageSource());
 
             var scene = new Scene2D(new OsmSharp.Math.Geo.Projections.WebMercator(), new List<float>(new float[] {
                 16, 14, 12, 10 }));
             var target = new StyleOsmStreamSceneTarget(
                 mapCSSInterpreter, scene, new WebMercator());
-            var source = new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Nancy.SelfHost.kempen.osm.pbf"));
+            var source = new PBFOsmStreamSource(Assembly.GetExecutingAssembly().GetManifestResourceStream("OsmSharp.Service.Tiles.Sample.SelfHost.kempen.osm.pbf"));
             var progress = new OsmStreamFilterProgress();
             progress.RegisterSource(source);
             target.RegisterSource(progress);
@@ -61,6 +61,9 @@ namespace OsmSharp.Service.Tiles.Nancy.SelfHost
             using (var host = new NancyHost(new Uri("http://localhost:1234")))
             {
                 host.Start();
+
+                OsmSharp.Logging.Log.TraceEvent("Program", Logging.TraceEventType.Information, "Nancyhost now listening @ http://localhost:1234");
+                System.Diagnostics.Process.Start("http://localhost:1234/default");
                 Console.ReadLine();
             }
         }
