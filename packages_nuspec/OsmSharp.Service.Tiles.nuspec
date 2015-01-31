@@ -10,7 +10,7 @@
     <projectUrl>http://www.osmsharp.com/</projectUrl>
         <iconUrl>http://www.osmsharp.com/sites/default/files/osmsharp_logo64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Package to host OsmSharp tile services in a NancyFX application.</description>
+    <description>Package to host OsmSharp tile services.</description>
     <summary>Package to host OsmSharp tile services in a NancyFX application.</summary>
     <copyright>Ben Abelshausen</copyright>
     <dependencies>
@@ -20,6 +20,5 @@
   </metadata>
   <files>
     <file src="Output\OsmSharp.Service.Tiles.dll" target="lib\net45\OsmSharp.Service.Tiles.dll" />
-    <file src="Output\OsmSharp.Service.Tiles.Nancy.dll" target="lib\net45\OsmSharp.Service.Tiles.Nancy.dll" />
   </files>
 </package>
