@@ -16,24 +16,28 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-using Nancy;
+using Nancy.Hosting.Self;
+using System;
 
 namespace OsmSharp.Service.Tiles.Nancy.SelfHost
 {
-    /// <summary>
-    /// A nancy module serving just the test page.
-    /// </summary>
-    public class IndexModule : NancyModule
+    public class Program
     {
-        /// <summary>
-        /// Creates a new instance of the tile module.
-        /// </summary>
-        public IndexModule()
+        public static void Main(string[] args)
         {
-            Get["default"] = parameters =>
+            // bool from configuration files.
+            OsmSharp.Service.Tiles.ApiBootstrapper.BootFromConfiguration();
+
+            // start listening.
+            var uri = new Uri("http://localhost:1234");
+            using (var host = new NancyHost(uri))
             {
-                return View["index"];
-            };
+                host.Start();
+
+                Console.WriteLine("The OsmSharp routing service is running at " + uri);
+                Console.WriteLine("Press [Enter] to close the host.");
+                Console.ReadLine();
+            }
         }
     }
 }

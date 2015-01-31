@@ -16,24 +16,36 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-using Nancy;
+using System.Configuration;
 
-namespace OsmSharp.Service.Tiles.Nancy.SelfHost
+namespace OsmSharp.Service.Tiles.Configurations
 {
     /// <summary>
-    /// A nancy module serving just the test page.
+    /// Represents a collection of instance configurations.
     /// </summary>
-    public class IndexModule : NancyModule
+    public class InstanceConfigurationCollection : ConfigurationElementCollection  
     {
-        /// <summary>
-        /// Creates a new instance of the tile module.
-        /// </summary>
-        public IndexModule()
+        public InstanceConfiguration this[int index]
         {
-            Get["default"] = parameters =>
+            get { return BaseGet(index) as InstanceConfiguration; }
+            set
             {
-                return View["index"];
-            };
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
         }
+
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new InstanceConfiguration();
+        }
+
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((InstanceConfiguration)element).Name;
+        }  
     }
 }

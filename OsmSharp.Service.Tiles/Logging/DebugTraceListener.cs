@@ -16,24 +16,20 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-using Nancy;
+using System.Diagnostics;
 
-namespace OsmSharp.Service.Tiles.Nancy.SelfHost
+namespace OsmSharp.Service.Tiles.Logging
 {
-    /// <summary>
-    /// A nancy module serving just the test page.
-    /// </summary>
-    public class IndexModule : NancyModule
+    public class DebugTraceListener : OsmSharp.Logging.TraceListener
     {
-        /// <summary>
-        /// Creates a new instance of the tile module.
-        /// </summary>
-        public IndexModule()
+        public override void Write(string message)
         {
-            Get["default"] = parameters =>
-            {
-                return View["index"];
-            };
+            Debug.Write(message);
+        }
+
+        public override void WriteLine(string message)
+        {
+            Debug.WriteLine(message);
         }
     }
 }

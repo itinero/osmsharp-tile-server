@@ -1,5 +1,5 @@
 ﻿// OsmSharp - OpenStreetMap (OSM) SDK
-// Copyright (C) 2014 Abelshausen Ben
+// Copyright (C) 215 Abelshausen Ben
 // 
 // This file is part of OsmSharp.
 // 
@@ -17,13 +17,8 @@
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
 using Nancy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OsmSharp.Service.Tiles.Nancy
+namespace OsmSharp.Service.Tiles
 {
     /// <summary>
     /// A nancy module service tiles.

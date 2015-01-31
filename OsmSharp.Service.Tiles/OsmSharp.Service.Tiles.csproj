@@ -35,6 +35,10 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr3.Runtime.PCL.3.5.0.3\lib\portable-win+net40+sl40+wp\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy, Version=0.23.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.0.23.2\lib\net40\Nancy.dll</HintPath>
+    </Reference>
     <Reference Include="OsmSharp, Version=4.3.0.924, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\OsmSharp.4.3.0.924-beta\lib\net45\OsmSharp.dll</HintPath>
@@ -59,6 +63,7 @@
       <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -74,10 +79,18 @@
     <Compile Include="..\SharedAssemblyVersion.cs">
       <Link>Properties\SharedAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="ApiBootstrapper.cs" />
     <Compile Include="Cache\TileCache.cs" />
+    <Compile Include="Configurations\TileApiConfiguration.cs" />
+    <Compile Include="Configurations\InstanceConfiguration.cs" />
+    <Compile Include="Configurations\InstanceConfigurationCollection.cs" />
     <Compile Include="ImageType.cs" />
+    <Compile Include="Logging\DebugTraceListener.cs" />
+    <Compile Include="Monitoring\FileMonitor.cs" />
+    <Compile Include="Monitoring\InstanceMonitoring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderingInstance.cs" />
+    <Compile Include="TileModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,13 +5,11 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Service.Tiles", "OsmSharp.Service.Tiles\OsmSharp.Service.Tiles.csproj", "{9BA21C41-B0D7-4F66-B199-495F812CCD73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Service.Tiles.Nancy", "OsmSharp.Service.Tiles.Nancy\OsmSharp.Service.Tiles.Nancy.csproj", "{788FE1FD-84E8-4049-B963-101500F65BA4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Service.Tiles.Nancy.SelfHost", "OsmSharp.Service.Tiles.Nancy.SelfHost\OsmSharp.Service.Tiles.Nancy.SelfHost.csproj", "{00D55298-C727-408E-B17A-66C0C3D62EF2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{170C51CF-0817-46D5-B69A-83F29237E555}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Service.Tiles.Sample.SelfHost", "samples\OsmSharp.Service.Tiles.Sample.SelfHost\OsmSharp.Service.Tiles.Sample.SelfHost.csproj", "{1CF58A11-C2DB-4CA8-BD64-08BD5DDDCC82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Service.Tiles.SelfHost", "OsmSharp.Service.Tiles.SelfHost\OsmSharp.Service.Tiles.SelfHost.csproj", "{00D55298-C727-408E-B17A-66C0C3D62EF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,18 +21,14 @@ Global
 		{9BA21C41-B0D7-4F66-B199-495F812CCD73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BA21C41-B0D7-4F66-B199-495F812CCD73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA21C41-B0D7-4F66-B199-495F812CCD73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{788FE1FD-84E8-4049-B963-101500F65BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{788FE1FD-84E8-4049-B963-101500F65BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{788FE1FD-84E8-4049-B963-101500F65BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{788FE1FD-84E8-4049-B963-101500F65BA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1CF58A11-C2DB-4CA8-BD64-08BD5DDDCC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CF58A11-C2DB-4CA8-BD64-08BD5DDDCC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CF58A11-C2DB-4CA8-BD64-08BD5DDDCC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CF58A11-C2DB-4CA8-BD64-08BD5DDDCC82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00D55298-C727-408E-B17A-66C0C3D62EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

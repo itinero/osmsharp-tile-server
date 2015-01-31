@@ -78,31 +78,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IndexModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OsmSharp.Service.Tiles.Nancy\OsmSharp.Service.Tiles.Nancy.csproj">
-      <Project>{788fe1fd-84e8-4049-b963-101500f65ba4}</Project>
-      <Name>OsmSharp.Service.Tiles.Nancy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OsmSharp.Service.Tiles\OsmSharp.Service.Tiles.csproj">
       <Project>{9ba21c41-b0d7-4f66-b199-495f812ccd73}</Project>
       <Name>OsmSharp.Service.Tiles</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\OsmSharpTestFiles\kempen-big.osm.pbf">
-      <Link>kempen-big.osm.pbf</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\OsmSharpTestFiles\mapcss\default.mapcss">
-      <Link>default.mapcss</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\OsmSharpTestFiles\kempen.osm.pbf">
+    <None Include="..\OsmSharpTestFiles\kempen.osm.pbf">
       <Link>kempen.osm.pbf</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="custom.mapcss" />
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="custom.mapcss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
