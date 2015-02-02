@@ -108,6 +108,8 @@ namespace OsmSharp.Service.Tiles
             if (_cache != null &&
                 _cache.TryGet(tile, scale, type, out cachedImage))
             { // read from cache.
+                OsmSharp.Logging.Log.TraceEvent("RenderingInstance", OsmSharp.Logging.TraceEventType.Information,
+                    string.Format("Returning cached image @ {0}", tile.ToInvariantString()));
                 return cachedImage;
             }
             var renderedImage = this.Render(x, y, scale, zoom, type);
@@ -116,6 +118,8 @@ namespace OsmSharp.Service.Tiles
                 _cache.Write(tile, scale, type, renderedImage);
                 renderedImage.Seek(0, SeekOrigin.Begin);
             }
+            OsmSharp.Logging.Log.TraceEvent("RenderingInstance", OsmSharp.Logging.TraceEventType.Information,
+                string.Format("Rendered new image @ {0}", tile.ToInvariantString()));
             return renderedImage;
         }
 
