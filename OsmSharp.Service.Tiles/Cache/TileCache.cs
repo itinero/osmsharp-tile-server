@@ -73,6 +73,7 @@ namespace OsmSharp.Service.Tiles.Cache
         /// Returns a file info object for a given tile.
         /// </summary>
         /// <param name="tile">The tile.</param>
+        /// <param name="scale">The scale.</param>
         /// <param name="type">The type of image.</param>
         /// <returns></returns>
         private FileInfo GetTileFile(Tile tile, int scale, ImageType type)
@@ -101,6 +102,7 @@ namespace OsmSharp.Service.Tiles.Cache
         /// Returns true if this tiles cache contains the given tile.
         /// </summary>
         /// <param name="tile">The tile.</param>
+        /// <param name="scale">The scale.</param>
         /// <param name="type">The type of image.</param>
         /// <returns></returns>
         public bool Has(Tile tile, int scale, ImageType type)
@@ -116,6 +118,7 @@ namespace OsmSharp.Service.Tiles.Cache
         /// Tries to get a tile and returns true if successfull.
         /// </summary>
         /// <param name="tile"></param>
+        /// <param name="scale"></param>
         /// <param name="type"></param>
         /// <param name="image"></param>
         /// <returns></returns>
@@ -143,6 +146,7 @@ namespace OsmSharp.Service.Tiles.Cache
         /// Writes a new file to cache.
         /// </summary>
         /// <param name="tile"></param>
+        /// <param name="scale"></param>
         /// <param name="type"></param>
         /// <param name="image"></param>
         public void Write(Tile tile, int scale, ImageType type, Stream image)
