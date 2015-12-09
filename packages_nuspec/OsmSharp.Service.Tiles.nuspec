@@ -14,7 +14,7 @@
     <summary>Package to host OsmSharp tile services in a NancyFX application.</summary>
     <copyright>Ben Abelshausen</copyright>
     <dependencies>
-      <dependency id="OsmSharp" version="4.3.0.835-beta" />
+      <dependency id="OsmSharp.UI" version="0.0.0.1084-beta" />
     </dependencies>
     <tags>osm, openstreetmap, tiles, mapcss, nancyfx</tags>
   </metadata>
