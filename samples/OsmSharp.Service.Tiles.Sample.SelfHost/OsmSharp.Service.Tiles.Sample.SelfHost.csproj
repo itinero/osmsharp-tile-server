@@ -35,8 +35,9 @@
     <StartupObject>OsmSharp.Service.Tiles.Sample.SelfHost.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Antlr3.Runtime.PCL.3.5.0.2\lib\portable-win+net40+sl40+wp\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nancy, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -46,28 +47,25 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Nancy.Hosting.Self.1.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
-    <Reference Include="OsmSharp, Version=4.3.0.997, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OsmSharp.4.3.0.997-beta\lib\net45\OsmSharp.dll</HintPath>
+    <Reference Include="OsmSharp, Version=0.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OsmSharp.Core.0.0.0.4-beta\lib\net45\OsmSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.Osm, Version=4.3.0.997, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OsmSharp.4.3.0.997-beta\lib\net45\OsmSharp.Osm.dll</HintPath>
+    <Reference Include="OsmSharp.Osm, Version=0.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OsmSharp.Core.0.0.0.4-beta\lib\net45\OsmSharp.Osm.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.Routing, Version=4.3.0.997, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OsmSharp.4.3.0.997-beta\lib\net45\OsmSharp.Routing.dll</HintPath>
+    <Reference Include="OsmSharp.UI, Version=0.0.0.1084, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OsmSharp.UI.0.0.0.1084-beta\lib\net45\OsmSharp.UI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.UI, Version=4.3.0.997, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OsmSharp.4.3.0.997-beta\lib\net45\OsmSharp.UI.dll</HintPath>
+    <Reference Include="OsmSharp.WinForms.UI, Version=0.0.0.1084, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OsmSharp.UI.0.0.0.1084-beta\lib\net45\OsmSharp.WinForms.UI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.WinForms.UI, Version=4.3.0.997, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OsmSharp.4.3.0.997-beta\lib\net45\OsmSharp.WinForms.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,8 +74,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Zlib.Portable">
+    <Reference Include="Zlib.Portable, Version=1.9.1.9000, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Zlib.Portable.1.9.2\lib\portable-net4+sl4+wp71+win8\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
