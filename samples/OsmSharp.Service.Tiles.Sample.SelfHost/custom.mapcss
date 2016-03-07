@@ -25,12 +25,11 @@ area|z12-[leisure]														{ z-index: -4; fill-color: #DADFC1; }
 area|z12-[natural=beach]												{ z-index: -4; fill-color: #FFF1BA; }
 
 /* ===== Landuse ===== */
-area|z12-[building]														{ z-index: -5; fill-color: #DDDDDD; }
+/* area|z12-[building]														{ z-index: -5; fill-color: #DDDDDD; } */
 
 /* ===== Water ==== */
 area[natural=water]														{ z-index: -3; fill-color: #9CB3BC;  }
 way|z10-[waterway]														{ z-index: -3; color: #9CB3BC; width: 1; }
-way|z11-[waterway][name]												{ z-index: -2; text-color: white; text-position: line; font-size: 11; text: name; }
 /* way|z12-[waterway][width]											{ z-index: -3; color: #9CB3BC; width: eval("tag('width')"); } */
 area|z12-[waterway=riverbank], area|z14-[waterway=dock]					{ z-index: -3; fill-color: #9CB3BC; }
 
@@ -65,7 +64,7 @@ way|z15-16[highway=secondary]											{ width: 7; }
 way|z17[highway=secondary]												{ width: 15; }
 way|z18-[highway=secondary]												{ width: 25; }
 way|z10-13[highway=secondary], way|z10-13[highway=secondary_link]		{ color: #FFFFFF; z-index: 5; }
-way|z13-[highway=secondary],way|z13-[highway=secondary_link]			{ color: #FFFFFF; casing-color: #D2D2D2; casing-width: 1; z-index: 5; font-size: 12; text: name; }
+way|z13-[highway=secondary],way|z13-[highway=secondary_link]			{ color: #FFFFFF; casing-color: #D2D2D2; casing-width: 1; z-index: 5; font-size: 11; text: name; }
 
 way|z12[highway=tertiary],way|z12[highway=tertiary_link]				{ width: 2; }
 way|z13[highway=tertiary],way|z13[highway=tertiary_link]				{ width: 4; }
@@ -73,23 +72,35 @@ way|z14[highway=tertiary],way|z14[highway=tertiary_link]				{ width: 4; }
 way|z15-16[highway=tertiary],way|z15-16[highway=tertiary_link]			{ width: 6; }
 way|z17[highway=tertiary],way|z17[highway=tertiary_link]				{ width: 13; }
 way|z18-[highway=tertiary],way|z18-[highway=tertiary_link]				{ width: 23; }
-way|z12-13[highway=tertiary],way|z12-13[highway=tertiary_link]			{ color: #FFFFFF; z-index: 5; }
-way|z13-[highway=tertiary],way|z12-[highway=tertiary_link]				{ color: #FFFFFF; casing-color: #D2D2D2; casing-width: 1; z-index: 5; font-size: 12; text: name; }
+way|z12-[highway=tertiary],way|z12-[highway=tertiary_link]				{ color: #FFFFFF; casing-color: #D2D2D2; casing-width: 1; z-index: 5; font-size: 10; text: name; }
 
 way|z11-12[highway=residential],
 way|z11-12[highway=road],way|z11-12[highway=living_street],
 way|z11-12[highway=unclassified]										{ color: #FFFFFF; width: 1; z-index: 4; }
-way|z13[highway=residential],
-way|z13[highway=road],way|z13[highway=living_street],
-way|z13[highway=unclassified]											{ color: #FFFFFF; width: 2; casing-color: #D2D2D2; casing-width: 1; z-index: 4; }
-way|z14-[highway=residential],
-way|z14-[highway=road],way|z14-[highway=living_street],
-way|z14-[highway=unclassified]											{ color: #FFFFFF; width: 4; casing-color: #D2D2D2; casing-width: 1; z-index: 4; font-size: 12; text: name; }
+way|z13-14[highway=residential],
+way|z13-14[highway=road],way|z13-14[highway=living_street],
+way|z13-14[highway=unclassified]										{ color: #FFFFFF; width: 1; casing-color: #D2D2D2; casing-width: 1; z-index: 4; }
+way|z15[highway=residential],
+way|z15[highway=road],way|z15[highway=living_street],
+way|z15[highway=unclassified]											{ color: #FFFFFF; width: 3; casing-color: #D2D2D2; casing-width: 1; z-index: 4; }
+way|z16-[highway=residential],
+way|z16-[highway=road],way|z16-[highway=living_street],
+way|z16-[highway=unclassified]											{ color: #FFFFFF; width: 6; casing-color: #D2D2D2; casing-width: 1; z-index: 4; font-size: 8; text: name; }
+
 
 way|z16-[highway=service]												{ color: #FFFFFF; width: 2; z-index: 4; }
 way|z16-[highway=track]													{ color: #FFFFFF; width: 1; dashes: 6,2; z-index: 5; }
 
 /* pedestrian/cycleway styling */
-way|z16-[highway=foot], way|z16-[highway=path], 
-way|z16-[highway=footway]												{ color: #FFFFFF; width: 1; dashes: 2,2; z-index: 3; }
-way|z16-[highway=cycleway]												{ color: #FFFFFF; width: 1; dashes: 2,2; z-index: 3; }
+way|z13-[highway=foot], way|z13-[highway=path], 
+way|z13-[highway=footway], way|z13-[highway=pedestrian] 	{ color: #D2D2D2; width: 3; z-index: 3; }
+area|z13-[highway=foot], area|z13-[highway=path], 
+area|z13-[highway=footway], area|z13-[highway=pedestrian] 	{ fill-color: #D2D2D2; width: 3; z-index: 3; }
+way|z16-[highway=cycleway]							{ color: #D2D2D2; width: 3; z-index: 3; }
+
+/* tunnels */
+way[tunnel=yes]															{ color: #D2D2D2; casing-color: #FFFFFF; z-index: 3; }
+
+way|z14-[oneway=yes]								{ arrows: forward; arrow-color: gray; arrow-dashes: 10,80; }
+way|z14-[oneway=-1], way|z14-[oneway=reverse]	
+				         							{ arrows: backward; arrow-color: gray; arrow-dashes: 10,80; }

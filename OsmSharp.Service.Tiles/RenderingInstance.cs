@@ -40,30 +40,16 @@ namespace OsmSharp.Service.Tiles
     /// </summary>
     public class RenderingInstance
     {
-        /// <summary>
-        /// Holds the target per scale.
-        /// </summary>
-        private Dictionary<int, Tuple<Bitmap, Graphics>> _targetsPerScale;
-
-        /// <summary>
-        /// Holds the renderer.
-        /// </summary>
-        private MapRenderer<Graphics> _renderer;
-
-        /// <summary>
-        /// Holds the map to render.
-        /// </summary>
-        private Map _map;
-
-        /// <summary>
-        /// Holds the tile cache.
-        /// </summary>
-        private TileCache _cache;
+        private Dictionary<int, Tuple<Bitmap, Graphics>> _targetsPerScale; // Holds the target per scale.
+        private MapRenderer<Graphics> _renderer; // Holds the renderer.
+        private Map _map; // Holds the map to render.
+        private TileCache _cache; // Holds the tile cache.
+        private int _oversampling = 2; // Holds the oversampling factor.
 
         /// <summary>
         /// Creates a new rendering instance.
         /// </summary>
-        public RenderingInstance()
+        public RenderingInstance(int oversamplingFactor = 1)
             : this(null)
         {
 
@@ -72,13 +58,14 @@ namespace OsmSharp.Service.Tiles
         /// <summary>
         /// Creates a new rendering instance.
         /// </summary>
-        /// <param name="cache">The cache.</param>
-        public RenderingInstance(TileCache cache)
+        public RenderingInstance(TileCache cache, int oversamplingFactor = 2)
         {
             _targetsPerScale = new Dictionary<int, Tuple<Bitmap, Graphics>>();
-            _renderer = new MapRenderer<Graphics>(new GraphicsRenderer2D());
+            _renderer = new MapRenderer<Graphics>(new GraphicsRenderer2D(oversamplingFactor));
             _map = new Map(new WebMercator());
             _cache = cache;
+
+            _oversampling = oversamplingFactor;
         }
 
         /// <summary>
@@ -126,18 +113,13 @@ namespace OsmSharp.Service.Tiles
         /// <summary>
         /// Renders a tile for the given zoom, x and y.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="zoom"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
         protected virtual Stream Render(int x, int y, int scale, ushort zoom, ImageType type)
         {
             var tile = new Tile(x, y, zoom);
             var projection = _map.Projection;
             var zoomFactor = (float)projection.ToZoomFactor(zoom);
             var center = tile.Box.Center;
-            var sizeInPixels = scale * 256;
+            var sizeInPixels = scale * 256 * _oversampling;
 
             // get target/image.
             Bitmap image = null;
@@ -170,6 +152,11 @@ namespace OsmSharp.Service.Tiles
                 _map.ViewChanged(zoomFactor, center, renderingView, renderingView);
                 _renderer.Render(target, _map, visibleView, renderingView, (float)_map.Projection.ToZoomFactor(zoom));
 
+                //if (_oversampling != 1)
+                //{
+                //    image = ResizeImage(image, sizeInPixels / _oversampling, sizeInPixels / _oversampling);
+                //}
+
                 switch (type)
                 {
                     case ImageType.Png:
@@ -182,9 +169,42 @@ namespace OsmSharp.Service.Tiles
                         image.Save(stream, ImageFormat.Jpeg);
                         break;
                 }
+
+                //if (_oversampling != 1)
+                //{
+                //    image.Dispose();
+                //}
             }
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
+        }
+
+        /// <summary>
+        /// Resize the image to the specified width and height.
+        /// </summary>
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
         }
 
         #region Static Instance Builders
