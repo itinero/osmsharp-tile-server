@@ -25,7 +25,7 @@ area|z12-[leisure]														{ z-index: -4; fill-color: #DADFC1; }
 area|z12-[natural=beach]												{ z-index: -4; fill-color: #FFF1BA; }
 
 /* ===== Landuse ===== */
-/* area|z12-[building]														{ z-index: -5; fill-color: #DDDDDD; } */
+area|z12-[building]														{ z-index: -5; fill-color: #DDDDDD; }
 
 /* ===== Water ==== */
 area[natural=water]														{ z-index: -3; fill-color: #9CB3BC;  }
