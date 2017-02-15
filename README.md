@@ -1,6 +1,8 @@
 OsmSharp.Service.Tiles
 ======================
 
+### This is unsupported and unmaintained, can serve as inspiration to others!
+
 Serves tiles directly from raw OSM files using the rendering functionality of OsmSharp. Handles for now only sub-country or city-sized OSM-extracts because all data is kept in-memory. Support will be added for vector data files in the future.
 
 <p>
